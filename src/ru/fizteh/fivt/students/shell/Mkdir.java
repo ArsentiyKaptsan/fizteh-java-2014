@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.Arsentiy_Kaptsan.shell;
+package ru.fizteh.fivt.students.Arsentiy_Kaptsan.shell;
 
 import java.io.File;
 import java.nio.file.*;

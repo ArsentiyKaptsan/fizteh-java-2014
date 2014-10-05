@@ -1,4 +1,4 @@
-package ru.fizteh.fivt.Arsentiy_Kaptsan.shell;
+package ru.fizteh.fivt.students.Arsentiy_Kaptsan.shell;
 
 /**
  * Created by Арсентий on 29.09.14.
