@@ -16,7 +16,7 @@ public class Mkdir {
         File filePath = shell.getCurrentDirectory().resolve(dirRelativePath).normalize().toFile();
 
         if (filePath.exists()) {
-            throw new RuntimeException(String.format("mkdir: %s: file or directory already exists", args[0]));
+            throw new RuntimeException(String.format("%s - file or directory already exists", args[0]));
         }
 
         try {
@@ -24,7 +24,7 @@ public class Mkdir {
                 throw new RuntimeException();
             }
         } catch (Throwable exc) {
-            throw new RuntimeException(String.format("mkdir: %s: directory is not created", args[0]));
+            throw new RuntimeException(String.format("%s - directory is not created", args[0]));
         }
     }
 }

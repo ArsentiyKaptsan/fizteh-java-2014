@@ -17,14 +17,7 @@ public class Mv {
                 throw new RuntimeException("Invalid arguments count");
             }
         }
-
-        try {
-            Cp.cp(shell, new String[] {"-r", fromPath, toPath});
-            Rm.rm(shell, new String[] {"-r", fromPath});
-        } catch (RuntimeException exc) {
-            StringBuilder strExc = new StringBuilder(exc.getMessage());
-            strExc = strExc.replace(0, 3 , "mv");
-            throw new RuntimeException(strExc.toString());
-        }
+        Cp.cp(shell, new String[] {"-r", fromPath, toPath});
+        Rm.rm(shell, new String[] {"-r", fromPath});
     }
 }

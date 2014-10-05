@@ -9,6 +9,11 @@ import java.util.Map;
  */
 public class RunClass {
     public static void main(String[] args) {
+        /*try {
+            throw new RuntimeException("Hello");
+        } catch (Throwable e) {
+            System.out.println(e.getMessage());
+        }*/
         Map<String, Method> methodsMap = init();
         if (args.length == 0) {
             new Shell(methodsMap).run(System.in);

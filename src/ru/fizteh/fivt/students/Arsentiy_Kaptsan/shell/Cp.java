@@ -34,11 +34,11 @@ public class Cp {
         File toFile = shell.getCurrentDirectory().resolve(toPath).normalize().toFile();
 
         if (!fromFile.exists()) {
-            throw new RuntimeException(String.format("cp: %s: source file does not exist", fromPath.toString()));
+            throw new RuntimeException(String.format("%s - source file does not exist", fromPath.toString()));
         }
 
         if (toFile.toPath().startsWith(fromFile.toPath())) {
-            throw new RuntimeException(String.format("cp: %s is subPath of %s",
+            throw new RuntimeException(String.format("%s is subPath of %s",
                     fromPath.toString(), toPath.toString()));
         }
 
@@ -46,15 +46,15 @@ public class Cp {
             return;
         }
 
-        if (fromFile.isDirectory() && recursevly) {
-            throw new RuntimeException(String.format("cp: %s is not an empty directory(not copied)",
+        if (fromFile.isDirectory() && !recursevly) {
+            throw new RuntimeException(String.format("%s is a directory(not copied)",
                     fromPath.toString()));
         }
 
         if (fromFile.isFile()) {
             if (toFile.isDirectory()) {
                 if (!toFile.exists()) {
-                    throw new RuntimeException(String.format("cp: %s: target directory does not exist",
+                    throw new RuntimeException(String.format("%s: target directory does not exist",
                             toPath.toString()));
                 }
                 toFile = toFile.toPath().resolve(fromFile.toPath().getFileName()).toFile();
@@ -63,18 +63,18 @@ public class Cp {
             try {
                 Files.copy(fromFile.toPath(), toFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException exc) {
-                throw new RuntimeException(String.format("cp: can not copy"));
+                throw new RuntimeException(String.format("can not copy"));
             }
         } else {
             if (toFile.exists()) {
                 if (toFile.isFile()) {
-                    throw new RuntimeException(String.format("cp: %s: target file already exist(can not overwrite)",
+                    throw new RuntimeException(String.format("%s: target file already exist(can not overwrite)",
                             toPath.toString()));
                 } else {
                     toFile = toFile.toPath().resolve(fromFile.toPath().getFileName()).toFile();
                 }
             } else if (!toFile.mkdir()) {
-                      throw new RuntimeException(String.format("cp: %s: can not create directory",
+                      throw new RuntimeException(String.format("%s: can not create directory",
                                 toPath.toString()));
             }
 
@@ -104,7 +104,7 @@ public class Cp {
                             }
                         });
             } catch (Throwable exp) {
-                throw new RuntimeException(String.format("cp: can not copy"));
+                throw new RuntimeException(String.format("can not copy"));
             }
         }
     }

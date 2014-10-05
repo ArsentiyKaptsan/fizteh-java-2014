@@ -17,11 +17,11 @@ public class Cd {
         File filePath = shell.getCurrentDirectory().resolve(dirRelativePath).normalize().toFile();
 
         if (!filePath.exists()) {
-            throw new RuntimeException(String.format("cd: %s: directory do not exist", args[0]));
+            throw new RuntimeException(String.format("%s: directory do not exist", args[0]));
         }
 
         if (!filePath.isDirectory()) {
-            throw new RuntimeException(String.format("cd: %s: is not directory", args[0]));
+            throw new RuntimeException(String.format("%s: is not directory", args[0]));
         }
 
         shell.setCurrentDirectory(filePath.toPath());

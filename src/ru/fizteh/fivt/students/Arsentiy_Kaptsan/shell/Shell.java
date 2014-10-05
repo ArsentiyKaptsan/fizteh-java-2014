@@ -56,6 +56,8 @@ public class Shell {
             while (true) {
                 System.out.print(String.format("Shell: %s $ ",
                         getCurrentDirectory()));
+                System.out.flush();
+
                 String commandsStr = br.readLine();
 
                 if (commandsStr == null) {
@@ -64,7 +66,7 @@ public class Shell {
 
                 String[] cmds = commandsStr.trim().split(";");
                 for (int i = 0; i < cmds.length; i++) {
-                    boolean errors = executeCommand(cmds[i].trim());
+                    boolean errors = !executeCommand(cmds[i].trim());
                     if (errors) {
                         break;
                     }
@@ -84,7 +86,7 @@ public class Shell {
         }
         String[] commands = sb.toString().split(";");
         for (int i = 0; i < commands.length; i++) {
-            boolean errors = executeCommand(commands[i].trim());
+            boolean errors = !executeCommand(commands[i].trim());
             if (errors) {
                 System.exit(1);
             }
@@ -99,34 +101,32 @@ public class Shell {
         Method commandMethod = methodsMap.get(args[0]);
         if (commandMethod == null) {
             System.err.println("No such command");
-            if (args[0].equals("help")) {
+            System.err.flush();
+            if (!args[0].equals("help")) {
                 Method helpMethod = methodsMap.get("help");
                 if (helpMethod != null) {
                     try {
-                        helpMethod.invoke(null, this, "");
+                        helpMethod.invoke(null, this, new String[] {""});
                     } catch (Throwable exc) {
-                        if (exc.getMessage() == null) {
-                            System.err.println(String.format("%s: Execution failed with unknown error",
-                                    args[0]));
-                        } else {
-                            System.err.println(String.format("%s: %s", args[0], exc.getMessage()));
-                        }
                         return false;
                     }
                 }
             }
             return false;
         }
+
         String[] commandArgs = Arrays.copyOfRange(args, 1 , args.length);
         try {
             commandMethod.invoke(null, this, commandArgs);
             return true;
         } catch (Throwable exc) {
-            if (exc.getMessage() == null) {
+            if (exc.getCause().getMessage() == null) {
                 System.err.println(String.format("%s: Execution failed with unknown error",
                         args[0]));
+                System.err.flush();
             } else {
-                System.err.println(String.format("%s: %s", args[0], exc.getMessage()));
+                System.err.println(String.format("%s: %s", args[0], exc.getCause().getMessage()));
+                System.err.flush();
             }
             return false;
         }

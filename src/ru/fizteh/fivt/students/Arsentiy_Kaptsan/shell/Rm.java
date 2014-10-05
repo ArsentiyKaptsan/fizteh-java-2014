@@ -31,18 +31,18 @@ public class Rm {
         File file = shell.getCurrentDirectory().resolve(filePath).normalize().toFile();
 
         if (!file.exists()) {
-            throw new RuntimeException(String.format("rm: %s: does not exist", file.toString()));
+            throw new RuntimeException(String.format("%s - does not exist", file.toString()));
         }
 
         if (file.isFile()) {
             try {
                 Files.delete(file.toPath());
             } catch (IOException exc) {
-                throw new RuntimeException(String.format("rm: %s: can not remove file", file.toString()));
+                throw new RuntimeException(String.format("%s - can not remove file", file.toString()));
             }
         } else {
             if (!recursevly) {
-                throw new RuntimeException(String.format("rm: %s: can not remove directory", file.toString()));
+                throw new RuntimeException(String.format("%s - can not remove directory", file.toString()));
             } else {
                 try {
                     Files.walkFileTree(file.toPath(), new SimpleFileVisitor<Path>() {
@@ -66,7 +66,7 @@ public class Rm {
                         }
                     });
                 } catch (IOException exc) {
-                    throw new RuntimeException(String.format("rm: %s: can not remove directory recursively",
+                    throw new RuntimeException(String.format("%s - can not remove directory recursively",
                             file.toString()));
                 }
             }

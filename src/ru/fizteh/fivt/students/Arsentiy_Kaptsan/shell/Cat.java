@@ -15,12 +15,12 @@ public class Cat {
 
         File filePath = shell.getCurrentDirectory().resolve(args[0]).normalize().toFile();
 
-        if (filePath.exists()) {
-            throw new RuntimeException(String.format("cat: %s: is not a file or directory", args[0]));
+        if (!filePath.exists()) {
+            throw new RuntimeException(String.format("%s - is not a file or directory", args[0]));
         }
 
         if (filePath.isDirectory()) {
-            throw new RuntimeException(String.format("cat: %s: is a directory", args[0]));
+            throw new RuntimeException(String.format("%s - is a directory", args[0]));
         }
 
         try {
@@ -29,7 +29,7 @@ public class Cat {
                 System.out.println(br.readLine());
             }
         } catch (Exception exc) {
-            throw new RuntimeException(String.format("cat: %s: can not read from file", args[0]));
+            throw new RuntimeException(String.format("%s - can not read from file", args[0]));
         }
     }
 }
